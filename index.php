@@ -9,7 +9,10 @@
 class Tag{
 	
 	protected $name;
-	protected $atr = [];
+	protected $attr = [];
+	protected $str_attrs;
+	protected $tag;
+
 
 	public function __construct(string $name_tag)
 	{
@@ -17,15 +20,38 @@ class Tag{
 	}
 
 
-	public function atr($name, $value)
+	public function attr($name, $value)
 	{
-		$this->atr[$name] = $value;
+		
+		$this->attr[$name] = $value;
 
 	}
 
-	public function render()
+	protected function str_attrs(){
+
+
+		$str_attrs = "";
+		if (count($this->attr) > 0) {
+
+			foreach ($this->attr as $key => $value) {
+				$this->str_attrs .= "{$key} = \"{$value}\"" ;
+				$this->str_attrs .= " " ;
+			}
+
+		}
+
+	}
+
+	public function render() здесь собираю весь тег с атрибутамив одиночном теге удаляю закрывающий тег
 	{
-		return '';
+
+		$this->str_attrs();
+
+		if (strlen($this->str_attrs) > 0){
+		 	$this->tag = "<{$this->name} {$this->str_attrs}></{$this->name}>";
+		}
+
+		return $this->tag;
 	}
 }
 
@@ -84,47 +110,49 @@ class PairTag extends Tag
 
 	public function render()
 	{
+		parent::render();
+
 		
-		if(!empty($this->tetx){
 
-					
+// else{
 
-		}
-
-
+// 		$this->tag = "<{$this->name}> </{$this->name}>";
+// 		}
 
 
-		$str_attrs = "";
-		if (count($this->atr) > 0) {
+			echo $this->tag;
 
-			foreach ($this->atr as $key => $value) {
-				$str_attrs .= "{$key} = \"{$value}\"" ;
-				$str_attrs .= " " ;
-			}
+	
+			$position = strpos($this->tag, 'tag_name');
+			echo $position;
 
 
-		$this->tag = "<{$this->name} {$str_attrs}> </{$this->name}>";
-
-		}else{
-
-		$this->tag = "<{$this->name}> </{$this->name}>";
-		}
+			// $this->tag = substr_replace($this->tag,$this->tetx,$position+1,0);
 
 
-		return $this->tag;
+		// if(!empty($this->tetx)){
+
+		// 	$position = strpos($this->tag, '>');
+		// 	$this->tag = substr_replace($this->tag,$this->tetx,$position+1,0);
+
+		// }
+
+
+		// return $this->tag;
 	}
 
 
 }
 
 
-$tag_1 = new PairTag("a");
+$a = new PairTag("a");
 
-$tag_1->atr('href', '#');
-$tag_1->atr('id', 'qqq');
-$tag_1->atr('class', 'wwww');
+$a->attr('href', '#');
+$a->attr('id', 'qqq');
+$a->attr('class', 'wwww');
+$a->text('qwerty');
 
-echo $tag_1->render();
+echo $a->render();
 
 
 
