@@ -7,15 +7,32 @@ interface IStorage{
 	public function get(string $key): mixed;
 }
 
-/**
- * 
- */
-class IStorage extends IStorage{
+
+class Storage implements IStorage{
 	
-	function __construct(argument)
-	{
+	function __construct($argument){
 		// code...
 	}
+
+
+	public function add(string $key, mixed $data):void{
+
+	}
+	public function remove(string $key):void{
+
+	}
+	public function contains(string $key):bool{
+
+	}
+
+	public function get(string $key): mixed{
+
+	}
+
+
+
+
+
 }
 
 
@@ -48,7 +65,7 @@ class Animal{
 
 
 class JSONLogger{
-	protected array $objects = [];
+	protected $objects = [];
 
 	public function addObject($obj) : void{
 		$this->objects[] = $obj;
