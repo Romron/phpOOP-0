@@ -1,10 +1,10 @@
 <?php
 
-abstract class Node{
-	public function render():string{}
+interface INode{
+	public function render():string;
 }
 
-class Tag extends Node{
+class Tag implements INode {
 
 	protected $name;
 	protected $attr = [];
@@ -55,7 +55,7 @@ class PairTag extends SingleTag {
 	protected $children = [];
 	protected $str_children = '';
 
-	public function appendChild( Node $child ) {
+	public function appendChild( INode $child ) {
 		$this->children[] = $child;
 
 		return $this;
@@ -82,8 +82,7 @@ class PairTag extends SingleTag {
 /**
  * 
  */
-class TextNode extends Node
-{
+class TextNode implements INode{
 	protected $text;
 
 	public function __construct($text){
