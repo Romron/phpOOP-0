@@ -9,16 +9,18 @@ include_once ('filestorage.php');
 //$ms = new MemoryStorage();
 $fs   = new FileStorage('articles.txt');
 $art1 = new Article($fs);
-// $art1->create([
-// 	'title' => 'New art',
-// 	'content' => 'Content new art',
-// ]);
 
-$fs->remove(3);
+$art1->title = '';
+// $art1->title = 'Title article';
+$art1->content = 'Content new art';
+$art1->create();
+
+// $art1->save();
+
+// $fs->remove(5);
 
 // $art1->title = 'New art';
 // $art1->content = 'Content new art';
-// $art1->save();
 
 /*
 $art2 = new Article($ms);
@@ -30,7 +32,7 @@ echo '</pre>';
 $art2->title = 'NZ';
 $art2->save();
  */
-// $art3 = new Article($ms);
+// $art3 = new Article($fs);
 // $art3->load(1);
 // echo '<pre>';
 // print_r($art3);

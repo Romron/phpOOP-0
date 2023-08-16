@@ -2,16 +2,17 @@
 
 class Article {
 	protected $id;
-	public $title;
-	public $content;
+	public $title   = '';
+	public $content = '';
 	protected $storage;
 
 	public function __construct(IStorage $storage) {
 		$this->storage = $storage;
 	}
 
-	public function create(array $fields) {
-		$this->id = $this->storage->create($fields);
+	public function create() {
+		$this->valid();
+		$this->id = $this->storage->create($this->pack_filds());
 
 	}
 
@@ -28,10 +29,32 @@ class Article {
 	}
 
 	public function save() {
+
+		$this->valid();
 		$this->storage->save();
-		$this->storage->update($this->id, [
-				'title'   => $this->title,
-				'content' => $this->content
-			]);
+		$this->storage->update($this->id, $this->pack_filds());
+	}
+
+	protected function pack_filds() {
+
+		return [
+			'title'   => $this->title,
+			'content' => $this->content
+		];
+	}
+
+	protected function valid():bool {
+
+		if (!is_string($this->title)
+			 || !is_string($this->content)
+			 || $this->title != ''
+			 || $this->content != ''
+		) {
+			throw new Exception("filds are error");
+		} else {
+
+			return true;
+		}
+
 	}
 }
