@@ -5,7 +5,18 @@ class FileStorage implements IStorage {
 	protected $ai      = 0;
 	protected $dbPath;
 
-	public function __construct(string $dbPath) {
+	protected static $instance = [];
+	// protected function __construct(){}
+
+	public static function getInstance(string $dbPath):self {
+		if (self::$instance[$dbPath] === null) {
+			self::$instance[$dbPath] = new self(string $dbPath);
+		}
+
+		return self::$instance[$dbPath];
+	}
+
+	protected function __construct(string $dbPath) {
 		$this->dbPath = $dbPath;
 
 		if (file_exists($this->dbPath)) {
