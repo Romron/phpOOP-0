@@ -2,13 +2,18 @@
 
 include_once('init.php');
 
-// const BASE_URL = '/test/hw4/';
+
+use Articles\Controller;
+use Router\Router;
+
+
+
 const BASE_URL = '/phpOOP-0/lesson4/';
 $router = new Router(BASE_URL);
 
-$router->addRoute('', 'ArticlesController');
-$router->addRoute('article/1', 'ArticlesController', 'item');
-$router->addRoute('article/2', 'ArticlesController', 'item'); // e t.c post/99, post/100 lol :))
+$router->addRoute('', 'Articles\Controller');
+$router->addRoute('article/1', 'Articles\Controller', 'item');
+$router->addRoute('article/2', 'Articles\Controller', 'item'); // e t.c post/99, post/100 lol :))
 
 $uri = $_SERVER['REQUEST_URI'];
 $activeRoute = $router->resolvePath($uri);

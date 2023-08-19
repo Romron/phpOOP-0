@@ -1,5 +1,9 @@
 <?php
 
+
+namespace Router;
+
+
 class Router{
 	protected  $baseUrl;
 	protected  $baseShift;

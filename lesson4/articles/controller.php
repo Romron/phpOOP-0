@@ -1,6 +1,12 @@
 <?php
 
-class ArticlesController implements IController{
+namespace Articles;
+
+use IController;
+use FileStorage\FileStorage;
+
+
+class Controller implements IController{
 	protected  $title = '';
 	protected  $content = '';
 	protected  $env;

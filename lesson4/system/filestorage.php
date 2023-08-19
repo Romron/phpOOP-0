@@ -1,5 +1,10 @@
 <?php
 
+namespace FileStorage;
+use IStorage; 
+
+
+
 class FileStorage implements IStorage{
 	protected  $records = [];
 	protected  $ai = 0;
