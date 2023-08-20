@@ -1,5 +1,7 @@
 <?php
 
+namespace System;
+
 interface IStorage{
 
 	public function create(array $fields) : int;

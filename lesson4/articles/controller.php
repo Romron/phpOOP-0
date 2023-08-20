@@ -2,8 +2,8 @@
 
 namespace Articles;
 
-use IController;
-use FileStorage\FileStorage;
+use System\IController;
+use System\FileStorage;
 
 
 class Controller implements IController{

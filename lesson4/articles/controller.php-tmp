@@ -2,8 +2,8 @@
 
 namespace Articles;
 
-use FileStorage\FileStorage;
-use IController;
+use System\FileStorage;
+use System\IController;
 
 class Controller implements IController {
 	protected $title   = '';

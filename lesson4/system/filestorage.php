@@ -1,7 +1,6 @@
 <?php
 
-namespace FileStorage;
-use IStorage; 
+namespace System;
 
 
 
