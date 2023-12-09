@@ -1,1 +1,0 @@
-{"records":{"1":{"title":"Article 1","content":"Some big text"},"2":{"title":"Article 2","content":"Some other text"}},"ai":2}
