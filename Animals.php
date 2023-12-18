@@ -15,9 +15,9 @@ class Animals
 	public $power;
 	public $alive = true;
 
-	public $power_multiplier;
-	public $speed_multiplier;
-	public $damage_multiplier;
+	// public $power_multiplier;
+	// public $speed_multiplier;
+	// public $damage_multiplier;
 
 	public $boost;
 
@@ -44,12 +44,10 @@ class Animals
 			$this->alive = false;
 		}
 
-		
-
 		echo 'healthy:  '. $this->healthy . '<br>';
 		echo 'alive:  '. $this->alive . '<br>';
 
-		
+		return $this->damage;
 	}
 
 
@@ -136,8 +134,6 @@ class Cat extends Animals
 		$this->boost = 0.025;
 		
 
-
-
 		parent::__construct($name,$healthy);
 
 	}
@@ -163,19 +159,19 @@ class Dog extends Animals
 class Mouse extends Animals
 {
 	
-	private $stealth_level;
+	public $hiding_level;
 
 	function __construct(string $name,int $healthy)
 	{
-		$this->stealth_level = 0.4;
-		$this->boost = 0.05 * $this->stealth_level;
+		$this->hiding_level = 0.4;
+		$this->boost = 0.05 * $this->hiding_level;
 
 
 
 		parent::__construct($name,$healthy);
 	}
 
-	public function set_stealth_leve()
+	public function set_hiding_level()
 	{
 		// code...
 	}
@@ -184,9 +180,9 @@ class Mouse extends Animals
 
 		$this->set_damage();
 
-		$Q = mt_rand(100, 1000) * 0.001;
+		$probability_of_hiding = mt_rand(100, 1000) * 0.001;
 
-		if ( $Q > $this->stealth_level) {
+		if ( $probability_of_hiding > $this->hiding_level) {
 			$this->healthy -= $this->damage;
 		}
 
@@ -198,13 +194,23 @@ class Mouse extends Animals
 
 		echo 'healthy:  '. $this->healthy . '<br>';
 		echo 'alive:  '. $this->alive . '<br>';
-		echo '$stealth_level:  '. $this->stealth_level . '<br>';
-		echo '$Q:  '. $Q . '<br>';
+		echo 'hiding_level:  '. $this->hiding_level . '<br>';
+		echo 'probability_of_hiding:  '. $probability_of_hiding . '<br>';
 
 		
 	}
 
 
+	public function set_damage()
+	{
+
+		$damage_multiplier = mt_rand(100, 200)*0.2;
+		$this->damage *= $damage_multiplier;
+
+
+		echo 'damage_multiplier:  ' . $damage_multiplier . '<br>'; 
+		echo 'damage:  ' . $this->damage . '<br>';
+	}
 
 
 
@@ -237,9 +243,24 @@ class Game_core
 	public function next_tick()
 	{
 		foreach ($this->units as $unit) {
-			$run_unit = $unit->status();
+			$damage = $unit->status();
+			$target = $this->getRndUnit($unit);
+
+
+			echo "{$unit->name} beat {$target->name}, damage = {$damage}";
 
 		}
+	}
+
+
+	public function getRndUnit($exclude)
+	{
+		$units = array_values(array_filter($this->units, function($unit) use ($exclude)
+		{
+			return $unit !== $exclude;
+		}));
+
+		return $units[mt_rand(0,count($units)-1)];
 	}
 
 }
@@ -253,9 +274,13 @@ $mouse = new Mouse("Jerry",5);
 $dog = new Dog("Bony",70);
 
 
-$Game-> add_unit($cat);
-$Game-> add_unit($mouse);
-$Game-> add_unit($dog);
+$Game-> add_unit(new Cat("Tihon",50));
+$Game-> add_unit(new Cat("Tom",35));
+$Game-> add_unit(new Mouse("Jerry",5));
+$Game-> add_unit(new Mouse("Hamster",5));
+$Game-> add_unit(new Dog("Pluto",55));
+$Game-> add_unit(new Dog("Bony",70));
+
 
 $Game-> next_tick();
 
