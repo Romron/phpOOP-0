@@ -71,10 +71,12 @@ class Animals
 		echo '</div> <!-- obj-start-data -->';
 		echo '<div class="obj-current-data">';
 
-		$this->get_Damage();
+		$damag = $this->get_Damage();
 
 		echo '</div> <!-- obj-current-data -->';
 		echo '</div> <!-- wrap-data-display -->';
+
+		return $damag;
 
 	}
 
@@ -129,6 +131,8 @@ class Animals
 class Cat extends Animals
 {
 	
+	// private lifes;
+
 	function __construct(string $name,int $healthy)
 	{
 		$this->boost = 0.025;
@@ -197,6 +201,9 @@ class Mouse extends Animals
 		echo 'hiding_level:  '. $this->hiding_level . '<br>';
 		echo 'probability_of_hiding:  '. $probability_of_hiding . '<br>';
 
+
+		return $this->damage;
+
 		
 	}
 
@@ -243,11 +250,13 @@ class Game_core
 	public function next_tick()
 	{
 		foreach ($this->units as $unit) {
+
+
 			$damage = $unit->status();
 			$target = $this->getRndUnit($unit);
 
 
-			echo "{$unit->name} beat {$target->name}, damage = {$damage}";
+			echo "{$unit->name} beat {$target->name}, damage = {$damage}	healthy {$target->name} = {$target->healthy}";
 
 		}
 	}
